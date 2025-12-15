@@ -14,7 +14,25 @@ export default function Map() {
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: "https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json",
+      style: {
+        version: 8,
+        sources: {
+          osm: {
+            type: "raster",
+            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+            tileSize: 256,
+            attribution: "&copy; OpenStreetMap Contributors",
+            maxzoom: 19,
+          },
+        },
+        layers: [
+          {
+            id: "osm",
+            type: "raster",
+            source: "osm",
+          },
+        ],
+      },
       center: [138.3073, 36.6507], // 須坂市役所を中心に
       zoom: 13,
     });
@@ -48,7 +66,7 @@ export default function Map() {
         source: "speakers",
         layout: {
           "text-field": ["get", "name"],
-          "text-font": ["Noto Sans Regular"],
+          "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
           "text-offset": [0, 1.5],
           "text-anchor": "top",
           "text-size": 12,
