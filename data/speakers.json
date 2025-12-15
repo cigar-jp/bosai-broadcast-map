@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3073, 36.6507]
+      },
+      "properties": {
+        "name": "須坂市役所",
+        "address": "須坂市大字須坂1528-1",
+        "type": "防災無線スピーカー"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3123, 36.6543]
+      },
+      "properties": {
+        "name": "須坂駅周辺",
+        "address": "須坂市大字須坂",
+        "type": "防災無線スピーカー"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3045, 36.6480]
+      },
+      "properties": {
+        "name": "須坂小学校",
+        "address": "須坂市大字須坂",
+        "type": "防災無線スピーカー"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3100, 36.6570]
+      },
+      "properties": {
+        "name": "須坂中学校",
+        "address": "須坂市大字須坂",
+        "type": "防災無線スピーカー"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3020, 36.6520]
+      },
+      "properties": {
+        "name": "須坂公園",
+        "address": "須坂市臥竜",
+        "type": "防災無線スピーカー"
+      }
+    }
+  ]
+}
