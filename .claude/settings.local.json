@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npx @biomejs/biome init:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run format:*)",
+      "Bash(npx @biomejs/biome check:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }
