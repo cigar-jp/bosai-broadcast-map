@@ -9,7 +9,9 @@
       "Bash(npm run lint)",
       "Bash(npm run format:*)",
       "Bash(npx @biomejs/biome check:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(chmod:*)",
+      "WebFetch(domain:note.com)"
     ]
   }
 }

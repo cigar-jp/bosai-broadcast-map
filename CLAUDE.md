@@ -56,6 +56,16 @@ npm run format   # Biomeでフォーマット実行
 npm run preview  # ビルド結果をプレビュー
 ```
 
+## Review Workflow
+
+**各Phaseの完了時に、必ず `/codex-review` スキルを実行すること。**
+
+```
+/codex-review Phase X: [Phase名]
+```
+
+詳細は `.claude/skills/codex-review/skill.md` を参照。
+
 ## v0 Success Criteria
 - 静的SPAとしてデプロイされ、地図表示・ピン表示・基本ログが確認できること
 
