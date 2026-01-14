@@ -46,6 +46,16 @@ Claude should act primarily as:
 - GitHub Actions
 - Vercel or Cloudflare Pages（静的ホスティング）
 
+## Development Commands
+
+```bash
+npm run dev      # 開発サーバー起動
+npm run build    # プロダクションビルド
+npm run lint     # Biomeでリント実行
+npm run format   # Biomeでフォーマット実行
+npm run preview  # ビルド結果をプレビュー
+```
+
 ## v0 Success Criteria
 - 静的SPAとしてデプロイされ、地図表示・ピン表示・基本ログが確認できること
 
