@@ -11,7 +11,9 @@
       "Bash(npx @biomejs/biome check:*)",
       "Bash(npm run build:*)",
       "Bash(chmod:*)",
-      "WebFetch(domain:note.com)"
+      "WebFetch(domain:note.com)",
+      "Bash(codex:*)",
+      "Bash(echo:*)"
     ]
   }
 }
