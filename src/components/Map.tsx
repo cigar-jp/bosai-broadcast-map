@@ -1,8 +1,8 @@
 import maplibregl from "maplibre-gl";
 import { useCallback, useEffect, useRef } from "react";
 import "maplibre-gl/dist/maplibre-gl.css";
-import speakersData from "../data/speakers.json";
-import type { SpeakerFeature, SpeakersGeoJSON } from "../types/speaker";
+import speakersData from "@/data/speakers.json";
+import type { SpeakerFeature, SpeakersGeoJSON } from "@/types/speaker";
 
 // 須坂市役所の座標
 const SUZAKA_CENTER: [number, number] = [138.3073, 36.6507];
