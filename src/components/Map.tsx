@@ -2,6 +2,7 @@ import maplibregl from "maplibre-gl";
 import { useCallback, useEffect, useRef } from "react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import speakersData from "@/data/speakers.json";
+import { trackMapMarkerClick } from "@/lib/analytics";
 import type { SpeakerFeature, SpeakersGeoJSON } from "@/types/speaker";
 
 // 須坂市役所の座標
@@ -131,6 +132,9 @@ export function MapView({ selectedSpeaker }: MapViewProps) {
         } | null;
 
         showPopup(mapInstance, coordinates, properties);
+        if (properties?.name) {
+          trackMapMarkerClick(properties.name);
+        }
       });
 
       // マーカーにホバーした時にカーソルを変更

@@ -1,5 +1,7 @@
 import { MapPin, Volume2 } from "lucide-react";
+import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { trackSpeakerClick, trackSpeakerListView } from "@/lib/analytics";
 import type { SpeakerFeature } from "@/types/speaker";
 
 interface SpeakerListProps {
@@ -8,6 +10,14 @@ interface SpeakerListProps {
 }
 
 export function SpeakerList({ speakers, onSpeakerClick }: SpeakerListProps) {
+  useEffect(() => {
+    trackSpeakerListView();
+  }, []);
+
+  const handleSpeakerClick = (speaker: SpeakerFeature) => {
+    trackSpeakerClick(speaker.properties.name);
+    onSpeakerClick(speaker);
+  };
   return (
     <div className="h-full overflow-y-auto bg-gray-50">
       <div className="p-4 bg-white border-b border-gray-200 sticky top-0 z-10">
@@ -23,8 +33,16 @@ export function SpeakerList({ speakers, onSpeakerClick }: SpeakerListProps) {
         {speakers.map((speaker) => (
           <Card
             key={speaker.properties.id}
-            className="cursor-pointer hover:shadow-md transition-shadow"
-            onClick={() => onSpeakerClick(speaker)}
+            className="cursor-pointer hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            role="button"
+            tabIndex={0}
+            onClick={() => handleSpeakerClick(speaker)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleSpeakerClick(speaker);
+              }
+            }}
           >
             <CardContent className="p-4">
               <div className="flex items-start gap-3">
