@@ -116,29 +116,29 @@
 
 ---
 
-## Phase 8: Testing（ユニットテスト） ⏳
+## Phase 8: Testing（ユニットテスト） ✅
 
 ### 8.1 Vitest セットアップ
-- [ ] `vitest` パッケージをインストール
-- [ ] `@testing-library/react` をインストール
-- [ ] `@testing-library/jest-dom` をインストール
-- [ ] `jsdom` をインストール
-- [ ] `vitest.config.ts` を作成
-- [ ] `src/test/setup.ts` を作成（テスト用グローバル設定）
-- [ ] `package.json` にテストスクリプトを追加
+- [x] `vitest` パッケージをインストール
+- [x] `@testing-library/react` をインストール
+- [x] `@testing-library/jest-dom` をインストール
+- [x] `jsdom` をインストール
+- [x] `vitest.config.ts` を作成
+- [x] `src/test/setup.ts` を作成（テスト用グローバル設定）
+- [x] `package.json` にテストスクリプトを追加
 
 ### 8.2 ユーティリティ関数のテスト
-- [ ] `src/lib/utils.ts` のテスト（cn関数）
-- [ ] `src/lib/analytics.ts` のテスト（イベント送信のモック）
+- [x] `src/lib/utils.ts` のテスト（cn関数）
+- [x] `src/lib/analytics.ts` のテスト（イベント送信のモック）
 
 ### 8.3 コンポーネントのテスト
-- [ ] `Header` コンポーネントのテスト
-- [ ] `SpeakerList` コンポーネントのテスト
-- [ ] `ErrorBoundary` コンポーネントのテスト
+- [x] `Header` コンポーネントのテスト
+- [x] `SpeakerList` コンポーネントのテスト
+- [x] `ErrorBoundary` コンポーネントのテスト
 
 ### 8.4 CI統合
-- [ ] GitHub Actions に `npm run test` を追加
-- [ ] カバレッジレポートの出力設定
+- [x] GitHub Actions に `npm run test` を追加
+- [x] カバレッジレポートの出力設定
 
 ---
 
@@ -153,8 +153,8 @@
 - [ ] 本番URLでアクセス可能 ← デプロイ後
 - [ ] Uptime監視が動作している ← UptimeRobot設定後
 - [ ] アラート通知が到達する ← アラート設定後
-- [ ] ユニットテストが通過する
-- [ ] CIでテストが自動実行される
+- [x] ユニットテストが通過する
+- [x] CIでテストが自動実行される
 
 ---
 
