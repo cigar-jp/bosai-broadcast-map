@@ -1,0 +1,109 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "須坂市役所前",
+        "address": "須坂市大字須坂1528-1",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3073, 36.6507]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "須坂駅前",
+        "address": "須坂市大字須坂",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3058, 36.6524]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "臥竜公園",
+        "address": "須坂市臥竜",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3201, 36.6612]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "須坂小学校",
+        "address": "須坂市大字須坂780",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3045, 36.6478]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "墨坂神社",
+        "address": "須坂市大字須坂",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3112, 36.6534]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "須坂市民体育館",
+        "address": "須坂市大字馬場町",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.2998, 36.6489]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "name": "井上地区公民館",
+        "address": "須坂市大字井上",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.2876, 36.6423]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "name": "日滝小学校",
+        "address": "須坂市大字日滝",
+        "type": "屋外拡声子局"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.3234, 36.6345]
+      }
+    }
+  ]
+}
