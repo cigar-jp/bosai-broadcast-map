@@ -1,174 +1,74 @@
-# v0 実装計画
+# デプロイ到達プラン
 
-## 概要
+## 目的
 
-防災無線マップのv0実装計画。
-**「完成させて一周すること」** を優先し、UI → Build → Deploy → Delivery → Logging → Alert の流れを最短で実現する。
+現状の実装を「ひとまず公開できる状態」まで持っていく。今回は機能追加よりも、CI を通し、公開設定を揃え、URL で動作確認できるところまでを優先する。
 
----
+## 現状確認（2026-04-06 時点）
 
-## Phase 1: UI基盤（地図表示） ✅
+| 項目 | 状態 | メモ |
+| --- | --- | --- |
+| Build | OK | `npm run build` は成功。`dist/assets/index-*.js` に 500kB 超の chunk warning あり |
+| Test | OK | `npm run test:run` は 27 件成功 |
+| Lint | NG | `biome.json` の schema `2.3.11` と実行中の CLI `2.4.9` が不一致。`src/components/ui/card.tsx` の import/export 並び順エラーもある |
+| UI/機能 | OK | 地図表示 / 一覧表示 / ポップアップ / 一覧からのフォーカス連携まで実装済み |
+| 計測/監視 | 一部完了 | GA / Sentry の初期化コードと `.env.example` はあるが、本番設定は未投入 |
+| 公開準備 | 未完了 | `index.html` が Vite 初期値のまま。ホスティング未接続 |
 
-### 1.1 MapLibre GL JS のセットアップ
-- [x] `maplibre-gl` パッケージをインストール
-- [x] 地図コンポーネント (`src/components/Map.tsx`) を作成
-- [x] 須坂市周辺を中心とした初期表示（緯度経度: 36.6507, 138.3073）
-- [x] OpenStreetMap タイルを使用
-- [x] MapLibre 用のスタイル定義（style URL/JSON もしくはラスターソース+レイヤー）を用意
-- [x] OSM クレジット表示（UI上の attribution）を実装し利用規約に準拠
+## 方針
 
-### 1.2 基本レイアウト
-- [x] ヘッダーコンポーネント作成
-- [x] 地図を全画面表示するレイアウト
-- [x] React Router でルーティング設定（`/` → 地図ページ）
+- 初回リリースは「静的 SPA を安定して公開する」ことを優先する
+- ホスティングは **Vercel を第一候補** にする（Cloudflare Pages でも代替可能）
+- UptimeRobot やアラート運用は **初回デプロイ後の次フェーズ** に回す
+- bundle size warning は現時点では非ブロッカーとして扱い、初回公開後の改善候補に残す
 
----
+## 実施ステップ
 
-## Phase 2: データ表示（ピン表示） ✅
+### Phase 1: CI を通る状態に戻す
 
-### 2.1 スピーカーデータの準備
-- [x] `src/data/speakers.json` を作成（GeoJSON形式）
-- [x] サンプルデータを手入力（須坂市内の防災無線スピーカー位置）
-- [x] データ出典・利用条件の確認（必要なら出典表記）
+1. `biome.json` の schema/version を実際の Biome CLI に合わせる、または依存バージョンを揃える
+2. `src/components/ui/card.tsx` の import / export 並び順を修正する
+3. `npm run lint`, `npm run test:run`, `npm run build` がローカルと CI の両方で通る状態にする
 
-### 2.2 ピン表示
-- [x] GeoJSONデータを地図上にマーカーとして表示
-- [x] マーカースタイル設定（色・サイズ）
+### Phase 2: 公開前の最低限の見た目と設定を整える
 
-### 2.3 ピン詳細表示
-- [x] マーカークリック時にポップアップ表示
-- [x] ポップアップに名称・住所等を表示
+1. `index.html` の `lang`, `title`, favicon, description をアプリ向けに更新する
+2. README に以下を追記する
+   - ローカル起動手順
+   - 環境変数の用途
+   - 本番デプロイ時の設定値
+3. `.env.example` と実コードの環境変数名が一致していることを確認する
+4. GA / Sentry の env が未設定でもアプリが安全に起動する現在の挙動を維持する
 
-### 2.4 ピン一覧表示
-- [x] サイドパネルまたはリストページでスピーカー一覧を表示
-- [x] 一覧からのクリックで地図上の該当ピンにフォーカス
+### Phase 3: デプロイ先を接続する
 
----
+1. Vercel にリポジトリを接続する
+2. Build Command を `npm run build`、Output Directory を `dist` に設定する
+3. `VITE_GA_MEASUREMENT_ID` と `VITE_SENTRY_DSN` を Vercel の Environment Variables に設定する
+4. 必要なら preview / production の environment を分ける
+5. React Router を `BrowserRouter` で使っているため、将来ルートを増やす場合は SPA fallback / rewrite を追加する  
+   ※ 現在は `/` のみなので初回公開のブロッカーではない
 
-## Phase 3: UIライブラリ導入 ✅
+### Phase 4: 公開確認
 
-### 3.1 Shadcn UI セットアップ
-- [x] shadcn/ui をインストール・初期化
-- [x] 必要なコンポーネントを追加（Button, Card, Dialog等）
-
-### 3.2 UIの整備
-- [x] ヘッダーのデザイン調整
-- [x] ピン一覧のカード表示
-- [x] レスポンシブ対応
-
----
-
-## Phase 4: Logging（ユーザー行動ログ） 🔧
-
-### 4.1 Google Analytics セットアップ
-- [ ] GA4 プロパティを作成 ← **手動設定が必要**
-- [x] `gtag.js` または `react-ga4` を導入
-- [x] 環境変数で測定IDを管理（Vite では `VITE_` 接頭辞を使用）
-- [ ] プライバシー通知/同意の要否を確認（必要なら同意UIを追加）
-
-### 4.2 イベントログ実装
-- [x] ページビュー送信
-- [x] ピンクリックイベント送信
-- [x] 一覧表示イベント送信
-
----
-
-## Phase 5: Monitoring（エラー監視） 🔧
-
-### 5.1 Sentry セットアップ
-- [ ] Sentry プロジェクトを作成 ← **手動設定が必要**
-- [x] `@sentry/react` をインストール
-- [x] 環境変数でDSNを管理
-
-### 5.2 エラー監視の実装
-- [x] グローバルエラーハンドラー設定
-- [x] React Error Boundary 設定
-
----
-
-## Phase 6: CI/CD・デプロイ 🔧
-
-### 6.1 GitHub Actions
-- [x] `.github/workflows/ci.yml` を作成
-- [x] lint / build の自動実行
-- [ ] PRマージ時のデプロイトリガー ← ホスティング設定後
-
-### 6.2 ホスティング
-- [ ] Vercel or Cloudflare Pages にプロジェクト接続 ← **手動設定が必要**
-- [ ] 本番環境の環境変数設定（GA_ID, SENTRY_DSN）
-- [ ] デプロイ確認
-
-### 6.3 Uptime監視
-- [ ] UptimeRobot でURL監視を設定 ← **手動設定が必要**
-- [ ] ダウン時のアラート通知設定
-
----
-
-## Phase 7: Alert（通知） ⏳
-
-### 7.1 アラート設計
-- [ ] 監視対象のアラート条件を定義（例: Uptime 低下、重大JSエラー） ← **手動設定が必要**
-- [ ] 通知先を決定（メール/Slack など）
-
-### 7.2 アラート設定
-- [ ] UptimeRobot などの通知先を有効化 ← **手動設定が必要**
-- [ ] テスト通知で到達性を確認
-
----
-
-## Phase 8: Testing（ユニットテスト） ✅
-
-### 8.1 Vitest セットアップ
-- [x] `vitest` パッケージをインストール
-- [x] `@testing-library/react` をインストール
-- [x] `@testing-library/jest-dom` をインストール
-- [x] `jsdom` をインストール
-- [x] `vitest.config.ts` を作成
-- [x] `src/test/setup.ts` を作成（テスト用グローバル設定）
-- [x] `package.json` にテストスクリプトを追加
-
-### 8.2 ユーティリティ関数のテスト
-- [x] `src/lib/utils.ts` のテスト（cn関数）
-- [x] `src/lib/analytics.ts` のテスト（イベント送信のモック）
-
-### 8.3 コンポーネントのテスト
-- [x] `Header` コンポーネントのテスト
-- [x] `SpeakerList` コンポーネントのテスト
-- [x] `ErrorBoundary` コンポーネントのテスト
-
-### 8.4 CI統合
-- [x] GitHub Actions に `npm run test` を追加
-- [x] カバレッジレポートの出力設定
-
----
+1. 本番 URL で以下を確認する
+   - 地図が表示される
+   - 一覧が表示される
+   - 一覧クリックで地図が移動する
+   - マーカークリックでポップアップが出る
+2. GA を有効化する場合は pageview / click イベントが届くことを確認する
+3. Sentry を有効化する場合はテスト用イベントまたは意図的な例外で通知を確認する
+4. 公開 URL を README または repository description に反映する
 
 ## 完了条件
 
-- [x] 須坂市の地図が表示される
-- [x] 防災無線スピーカーの位置がピン表示される
-- [x] ピンをクリックすると詳細が表示される
-- [x] スピーカー一覧が確認できる
-- [ ] Google Analytics でイベントが記録される ← GA4プロパティ作成後
-- [ ] Sentry でエラーが捕捉される ← Sentryプロジェクト作成後
-- [ ] 本番URLでアクセス可能 ← デプロイ後
-- [ ] Uptime監視が動作している ← UptimeRobot設定後
-- [ ] アラート通知が到達する ← アラート設定後
-- [x] ユニットテストが通過する
-- [x] CIでテストが自動実行される
+- CI が green である
+- 本番 URL から地図機能を利用できる
+- GA / Sentry を使う場合は env 設定が完了している
+- 公開に必要な手順が README で追える
 
----
+## デプロイ後の次フェーズ
 
-## 技術的な決定事項
-
-| 項目 | 決定 |
-|------|------|
-| 地図ライブラリ | MapLibre GL JS |
-| タイル | OpenStreetMap |
-| データ形式 | GeoJSON（リポジトリ内JSON） |
-| UIライブラリ | Shadcn UI |
-| ログ | Google Analytics 4 |
-| エラー監視 | Sentry |
-| ホスティング | Vercel or Cloudflare Pages |
-| Uptime監視 | UptimeRobot |
-| テストフレームワーク | Vitest |
-| テストライブラリ | React Testing Library |
+- bundle size warning の解消（Sentry Replay / code splitting の見直し）
+- UptimeRobot の監視追加
+- Sentry / Uptime のアラート通知設定
